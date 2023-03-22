@@ -406,10 +406,12 @@ export function PipesGame(grid, tiles, savedProgress) {
 			return;
 		}
 		const tileState = self.tileStates[tileIndex];
-		if (tileState.data.edgeMarks[index] === mark) {
-			tileState.data.edgeMarks[index] = 'empty';
-		} else if (tileState.data.edgeMarks[index] !== 'none') {
-			tileState.data.edgeMarks[index] = mark;
+		if (tileState.data.edgeMarks[index] !== 'none') {
+			if (tileState.data.edgeMarks[index] === mark || mark === 'empty') {
+				tileState.data.edgeMarks[index] = 'empty';
+			} else {
+				tileState.data.edgeMarks[index] = mark;
+			}
 		}
 		tileState.set(tileState.data);
 		if (tileState.data.edgeMarks[index] !== 'empty' && assistant) {
@@ -740,6 +742,11 @@ export function PipesGame(grid, tiles, savedProgress) {
 		}
 		if (tileState.data.locked !== targetState) {
 			tileState.toggleLocked();
+		}
+		if (targetState && currentSettings.removeEdgeMarksOnLock) {
+			for (const direction of grid.DIRECTIONS) {
+				self.toggleEdgeMark('empty', tileIndex, direction, assistant)
+			}
 		}
 		if (targetState && assistant) {
 			for (let direction of self.grid.polygon_at(tileIndex).directions) {
