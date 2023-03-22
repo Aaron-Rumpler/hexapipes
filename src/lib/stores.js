@@ -48,7 +48,8 @@ function createSettings() {
 		assistant: false,
 		/** @type {AnimationSpeed} */
 		animationSpeed: 'normal',
-		requireLocked: false
+		requireLocked: false,
+		removeEdgeMarksOnLock: false
 	};
 
 	const { subscribe, set, update } = writable(defaultSettings);
