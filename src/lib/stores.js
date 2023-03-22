@@ -47,7 +47,8 @@ function createSettings() {
 		disableZoomPan: false,
 		assistant: false,
 		/** @type {AnimationSpeed} */
-		animationSpeed: 'normal'
+		animationSpeed: 'normal',
+		edgeMarkMouseTime: 300
 	};
 
 	const { subscribe, set, update } = writable(defaultSettings);
