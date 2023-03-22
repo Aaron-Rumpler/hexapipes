@@ -244,6 +244,8 @@
 		includeNewPuzzleButton={true}
 		on:newPuzzle={generate}
 		on:download={puzzle.download}
+		on:zoomOut={puzzle.zoomOut}
+		on:zoomIn={puzzle.zoomIn}
 	/>
 </div>
 
