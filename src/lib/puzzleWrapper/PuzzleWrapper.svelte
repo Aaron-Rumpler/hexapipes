@@ -244,6 +244,9 @@
 		on:startOver={startOver}
 		on:newPuzzle={newPuzzle}
 		on:download={puzzle.download}
+		on:zoomOut={puzzle.zoomOut}
+		on:zoomIn={puzzle.zoomIn}
+		on:resetView={puzzle.resetView}
 	/>
 </div>
 

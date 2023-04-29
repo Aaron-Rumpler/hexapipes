@@ -188,6 +188,9 @@
 		solved={solve.elapsedTime !== -1}
 		on:startOver={startOver}
 		on:download={puzzle.download}
+		on:zoomOut={puzzle.zoomOut}
+		on:zoomIn={puzzle.zoomIn}
+		on:resetView={puzzle.resetView}
 		includeNewPuzzleButton={false}
 	/>
 </div>
