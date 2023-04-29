@@ -52,7 +52,8 @@ function createSettings() {
 		/** @type {AnimationSpeed} */
 		animationSpeed: 'normal',
 		requireLocked: false,
-		removeEdgeMarksOnLock: false
+		removeEdgeMarksOnLock: false,
+		edgeMarkMouseTime: 300
 	};
 
 	const { subscribe, set, update } = writable(defaultSettings);

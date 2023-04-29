@@ -87,6 +87,11 @@
 			<input type="checkbox" bind:checked={$settings.removeEdgeMarksOnLock} name="removeEdgeMarksOnLock" />
 			Remove a tile's edge marks when it is locked
 		</label>
+		<br />
+		<label>
+			Time required to hold mouse button to set an edge mark
+			<input type="range" min="100" max="1000" bind:value={$settings.edgeMarkMouseTime} name="edgeMarkMouseTime" />
+		</label>
 	</div>
 	<div class="controlMode">
 		<h3>Timer</h3>
