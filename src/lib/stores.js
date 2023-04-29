@@ -50,7 +50,9 @@ function createSettings() {
 		disableScrollZoomPan: false,
 		assistant: false,
 		/** @type {AnimationSpeed} */
-		animationSpeed: 'normal'
+		animationSpeed: 'normal',
+		requireLocked: false,
+		removeEdgeMarksOnLock: false
 	};
 
 	const { subscribe, set, update } = writable(defaultSettings);
