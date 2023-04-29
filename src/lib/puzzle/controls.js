@@ -41,6 +41,7 @@ export function controls(node, game) {
 	// set this once to not deal with changes
 	// changes will take effect on page refresh
 	const useZoomPan = !currentSettings.disableZoomPan;
+	const useScrollZoomPan = !currentSettings.disableScrollZoomPan;
 
 	const rect = node.getBoundingClientRect();
 	const pixelsWidth = rect.width;
@@ -118,7 +119,10 @@ export function controls(node, game) {
 		if (mouseDownOrigin.tileIndex === -1) {
 			if (!useZoomPan) {
 				state = 'idle';
-			} else if (!grid.wrap && (x < grid.XMIN || x > grid.XMAX || y < grid.YMIN || y > grid.YMAX)) {
+			} else if (
+				!grid.wrap && !currentSettings.allowEmptySpacePan &&
+				(x < grid.XMIN || x > grid.XMAX || y < grid.YMIN || y > grid.YMAX)
+			) {
 				state = 'idle';
 			} else {
 				state = 'panning';
@@ -312,7 +316,10 @@ export function controls(node, game) {
 	 */
 	function handleWheel(event) {
 		const [x, y] = getEventCoordinates(event);
-		if (!grid.wrap && (x < grid.XMIN || x > grid.XMAX || y < grid.YMIN || y > grid.YMAX)) {
+		if (
+			!grid.wrap && !currentSettings.allowEmptySpacePan &&
+			(x < grid.XMIN || x > grid.XMAX || y < grid.YMIN || y > grid.YMAX)
+		) {
 			// allow scrolling when the mouse is over empty space
 			return;
 		}
@@ -326,7 +333,7 @@ export function controls(node, game) {
 				// pan with 2-finger slides on touchpad
 				const dx = (normalized.pixelX / pixelsWidth) * viewBox.width;
 				const dy = (normalized.pixelY / pixelsHeight) * viewBox.height;
-				const sensitivity = 0.5;
+				const sensitivity = 0.5 * currentSettings.touchpadPanSensitivity / 100;
 				game.viewBox.pan(-dx * sensitivity, -dy * sensitivity);
 			}
 		} else {
@@ -418,7 +425,7 @@ export function controls(node, game) {
 				if (!useZoomPan) {
 					touchState = 'idle';
 				} else if (
-					!grid.wrap &&
+					!grid.wrap && !currentSettings.allowEmptySpacePan &&
 					(x < grid.XMIN || x > grid.XMAX || y < grid.YMIN || y > grid.YMAX)
 				) {
 					touchState = 'idle';
@@ -598,7 +605,7 @@ export function controls(node, game) {
 	document.addEventListener('mouseup', handleMouseUp);
 	document.addEventListener('keydown', handleKeyDown);
 	document.addEventListener('keyup', handleKeyUp);
-	if (useZoomPan) {
+	if (useScrollZoomPan) {
 		node.addEventListener('wheel', handleWheel, { passive: false });
 	}
 
