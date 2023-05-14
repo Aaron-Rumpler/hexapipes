@@ -1,4 +1,6 @@
 <script>
+	import { settings } from "$lib/stores.js";
+	
 	/** @type {Number} i*/
 	export let i;
 
@@ -41,7 +43,7 @@
 			bgColor = locked ? '#bbb' : '#ddd';
 		}
 	}
-	$: if ($state.hasDisconnects) {
+	$: if ($settings.disconnectHighlighting && $state.hasDisconnects) {
 		strokeColor = $disconnectStrokeColor;
 		strokeWidth = game.grid.STROKE_WIDTH * $disconnectStrokeWidthScale;
 	} else if ($state.isPartOfIsland) {
