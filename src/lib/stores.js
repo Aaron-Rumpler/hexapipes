@@ -47,7 +47,8 @@ function createSettings() {
 		disableZoomPan: false,
 		assistant: false,
 		/** @type {AnimationSpeed} */
-		animationSpeed: 'normal'
+		animationSpeed: 'normal',
+		disconnectHighlighting: true
 	};
 
 	const { subscribe, set, update } = writable(defaultSettings);
