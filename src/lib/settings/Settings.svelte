@@ -157,6 +157,13 @@
 			Instant
 		</label>
 	</div>
+	<div class="visualStyle">
+		<h3>Disconnect highlighting</h3>
+		<label>
+			<input type="checkbox" bind:checked={$settings.disconnectHighlighting} name="disconnectHighlighting" />
+			Show disconnect highlighting
+		</label>
+	</div>
 </div>
 
 <style>

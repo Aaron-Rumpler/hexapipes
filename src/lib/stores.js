@@ -53,7 +53,8 @@ function createSettings() {
 		animationSpeed: 'normal',
 		requireLocked: false,
 		removeEdgeMarksOnLock: false,
-		edgeMarkMouseTime: 300
+		edgeMarkMouseTime: 300,
+		disconnectHighlighting: true
 	};
 
 	const { subscribe, set, update } = writable(defaultSettings);
