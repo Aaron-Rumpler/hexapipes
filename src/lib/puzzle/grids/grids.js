@@ -90,3 +90,96 @@ export const gridInfo = {
 		]
 	}
 };
+
+function randomChoice(array) {
+	return array[Math.floor(Math.random() * array.length)];
+}
+
+function randomTotal() {
+	return Math.floor(250 + 100 * Math.random());
+}
+
+/**
+ * Creates a random grid for setting a daily puzzle
+ * @returns {import('$lib/puzzle/grids/abstractgrid').AbstractGrid}
+ */
+export function randomGrid() {
+	let kind = 'hexagonal';
+	if (Math.random() < 0.4) {
+		kind = randomChoice([
+			'octagonal',
+			//'etrat',  // too hard
+			//'square', // too easy
+			'cube'
+		]);
+	}
+	if (kind === 'hexagonal') {
+		const total = randomTotal();
+		let width = Math.floor(Math.sqrt(total));
+		width += 1 - (width % 2); // odd sizes are better
+		const wrap = Math.random() < 0.5;
+		const grid = new HexaGrid(width, width, wrap);
+		let shape;
+		if (wrap) {
+			shape = randomChoice([
+				'half-wrap-horizontal',
+				'half-wrap-vertical',
+				'round-hole'
+				// 'hexagon',
+				// 'hourglass',
+				// 'triangle',
+				// 'donut'
+			]);
+		} else {
+			shape = randomChoice(['hexagon', 'triangle', 'hourglass', 'donut']);
+		}
+		grid.useShape(shape);
+		return grid;
+	} else if (kind === 'octagonal') {
+		const total = 0.4 * randomTotal();
+		let width = Math.floor(Math.sqrt(total));
+		const wrap = Math.random() < 0.5;
+		const grid = new OctaGrid(width, width, wrap);
+		let shape;
+		if (wrap) {
+			shape = randomChoice(['half-wrap-horizontal', 'half-wrap-vertical', 'hole']);
+		} else {
+			shape = randomChoice(['octagon', 'hole', 'butterfly', 'donut']);
+		}
+		grid.useShape(shape);
+		return grid;
+	} else if (kind === 'cube') {
+		const total = randomTotal();
+		let width = Math.floor(Math.sqrt(total));
+		const wrap = Math.random() < 0.5;
+		const scale = wrap ? 0.58 : 0.67;
+		for (let i = 0; i < 3; i++) {
+			if (Math.round(scale * width) % 2 === 1) {
+				break;
+			}
+			width += 1;
+		}
+		const grid = new CubeGrid(width, width, wrap);
+		let shape;
+		if (wrap) {
+			shape = randomChoice([
+				'half-wrap-horizontal',
+				'half-wrap-vertical',
+				'round-hole'
+				// 'hexagon',
+				// 'hourglass',
+				// 'triangle',
+				// 'donut'
+			]);
+		} else {
+			shape = randomChoice(['hexagon', 'triangle', 'hourglass', 'donut']);
+		}
+		grid.useShape(shape);
+		return grid;
+	} else {
+		const total = randomTotal();
+		const width = Math.floor(Math.sqrt(total));
+		const wrap = Math.random() > 0.5;
+		return createGrid(kind, width, width, wrap);
+	}
+}
